@@ -11,7 +11,8 @@ output:
 ## Loading and preprocessing the data
 - Get the data from file "activity.csv"
 - Set variable "date" to Date format
-```{r Read the data}
+
+```r
 dfSteps <- read.csv("./data/activity.csv")
 dfSteps$date <- as.Date(as.character(dfSteps$date), "%Y-%m-%d")
 ```
@@ -19,7 +20,8 @@ dfSteps$date <- as.Date(as.character(dfSteps$date), "%Y-%m-%d")
 - Calculate total steps each day (function "aggregate")
 - Plot histogram with steps (use ggplot2 library)
 - Add lines for Mean and Median
-```{r Steps per day histogram}
+
+```r
 dfStepsByDay <- aggregate(steps ~ date, dfSteps, sum)
 library(ggplot2)
 ggplot(data = dfStepsByDay, aes(steps))+
@@ -48,6 +50,8 @@ ggplot(data = dfStepsByDay, aes(steps))+
   theme_bw()
 ```
 
+![](PA1_template_files/figure-html/Steps per day histogram-1.png)<!-- -->
+
 We are ignore NA values now.
 Value of Mean and Median are the same, equal to 10765.
 
@@ -56,10 +60,25 @@ Value of Mean and Median are the same, equal to 10765.
 - Set new variable "int_time" for interval in Date-Time format
 - Calculate interval with max average steps
 - Plot line for average steps and point for max interval
-```{r Draw average day activity pattern}
+
+```r
 dfStepsByInterval <- aggregate(steps ~ interval, dfSteps, mean)
 library(stringr)
 library(lubridate)
+```
+
+```
+## 
+## Attaching package: 'lubridate'
+```
+
+```
+## The following object is masked from 'package:base':
+## 
+##     date
+```
+
+```r
 dfStepsByInterval$int_time <- strptime(
                                 paste(
                                   str_pad(as.character(dfStepsByInterval$interval %/% 100)
@@ -91,6 +110,8 @@ ggplot(data = dfStepsByInterval, aes(int_time, steps))+
   theme_bw()
 ```
 
+![](PA1_template_files/figure-html/Draw average day activity pattern-1.png)<!-- -->
+
 We can see some spikes in average activity pattern:
 
 - Morning activity from 08:00 to 09:00 (average max steps per day is in 08:35 interval)
@@ -100,11 +121,33 @@ We can see some spikes in average activity pattern:
 - Decide to set NA values to 0
 - Recalculate steps per day with 0 instead of NA
 - Plot new histogram and Mean and Median lines
-```{r Recalculate with 0 instead of NA}
+
+```r
   sum(is.na(dfSteps))
+```
+
+```
+## [1] 2304
+```
+
+```r
   sum(is.na(dfSteps$steps))
+```
+
+```
+## [1] 2304
+```
+
+```r
   dfSteps$steps[is.na(dfSteps$steps)] <- 0
   sum(is.na(dfSteps$steps))
+```
+
+```
+## [1] 0
+```
+
+```r
   dfStepsByDay <- aggregate(steps ~ date, dfSteps, sum)
 
 ggplot(data = dfStepsByDay, aes(steps))+
@@ -133,6 +176,8 @@ ggplot(data = dfStepsByDay, aes(steps))+
   theme_bw()
 ```
 
+![](PA1_template_files/figure-html/Recalculate with 0 instead of NA-1.png)<!-- -->
+
 Now we see, that value of Mean move to the left, after we add some "zero steps" days (before preparation they were "NA steps" days, and not affect)
 
 ## Are there differences in activity patterns between weekdays and weekends?
@@ -140,8 +185,23 @@ Now we see, that value of Mean move to the left, after we add some "zero steps" 
 - Calculate average steps by intervals in weekdays and weekends
 - Set new variable "int_time" for interval in Date-Time format
 - Plot two lines for average steps in Weekdats/Weekend
-```{r Compare Weekday and Weekend activity patterns}
+
+```r
 library(chron)
+```
+
+```
+## 
+## Attaching package: 'chron'
+```
+
+```
+## The following objects are masked from 'package:lubridate':
+## 
+##     days, hours, minutes, seconds, years
+```
+
+```r
 dfSteps$weekend <- factor(is.weekend(dfSteps$date),
                           levels = c(FALSE, TRUE),
                           labels = c("Weekday", "Weekend"))
@@ -166,5 +226,7 @@ ggplot(data = dfStepsByIntWD, aes(int_time, steps))+
   labs(x = "Time", y = "Steps", title = "Average steps by 5-minute interval, weekday/weekend")+
   theme_bw()
 ```
+
+![](PA1_template_files/figure-html/Compare Weekday and Weekend activity patterns-1.png)<!-- -->
 
 We can see, that maximum day activity higher in Weekdays (and morning activity begin earlier), but average day activity is higher in Weekends
