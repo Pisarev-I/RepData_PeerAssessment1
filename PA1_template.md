@@ -50,7 +50,7 @@ ggplot(data = dfStepsByDay, aes(steps))+
   theme_bw()
 ```
 
-![](PA1_template_files/figure-html/Steps per day histogram-1.png)<!-- -->
+![](PA1_template_files/figure-html/unnamed-chunk-2-1.png)<!-- -->
 
 We are ignore NA values now.
 Value of Mean and Median are the same, equal to 10765.
@@ -110,7 +110,7 @@ ggplot(data = dfStepsByInterval, aes(int_time, steps))+
   theme_bw()
 ```
 
-![](PA1_template_files/figure-html/Draw average day activity pattern-1.png)<!-- -->
+![](PA1_template_files/figure-html/unnamed-chunk-3-1.png)<!-- -->
 
 We can see some spikes in average activity pattern:
 
@@ -176,7 +176,7 @@ ggplot(data = dfStepsByDay, aes(steps))+
   theme_bw()
 ```
 
-![](PA1_template_files/figure-html/Recalculate with 0 instead of NA-1.png)<!-- -->
+![](PA1_template_files/figure-html/unnamed-chunk-4-1.png)<!-- -->
 
 Now we see, that value of Mean move to the left, after we add some "zero steps" days (before preparation they were "NA steps" days, and not affect)
 
@@ -227,6 +227,6 @@ ggplot(data = dfStepsByIntWD, aes(int_time, steps))+
   theme_bw()
 ```
 
-![](PA1_template_files/figure-html/Compare Weekday and Weekend activity patterns-1.png)<!-- -->
+![](PA1_template_files/figure-html/unnamed-chunk-5-1.png)<!-- -->
 
 We can see, that maximum day activity higher in Weekdays (and morning activity begin earlier), but average day activity is higher in Weekends
